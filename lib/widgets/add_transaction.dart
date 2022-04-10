@@ -1,12 +1,10 @@
-import 'dart:ffi';
-
 import 'package:expense_manager/models/transaction.dart';
 import 'package:flutter/material.dart';
 
 class AddTransaction extends StatefulWidget {
-  Function addTransaction;
+  final Function addTransaction;
 
-  AddTransaction({Key? key, required this.addTransaction}) : super(key: key);
+  const AddTransaction({Key? key, required this.addTransaction}) : super(key: key);
 
   @override
   State<AddTransaction> createState() => _AddTransactionState();

@@ -82,23 +82,28 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.of(context).pop();
   }
 
+  void _openBottomSheet(){
+    showModalBottomSheet(
+        context: context,
+        builder: (ctx) {
+          return AddTransaction(
+            addTransaction: _addTransaction,
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-              context: context,
-              builder: (ctx) {
-                return AddTransaction(
-                  addTransaction: _addTransaction,
-                );
-              });
-        },
+        onPressed: _openBottomSheet,
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
         title: const Text('Home'),
+        actions: [
+          IconButton(onPressed: _openBottomSheet, icon: const Icon(Icons.add)),
+        ],
       ),
       body: Column(
         children: [
