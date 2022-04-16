@@ -1,6 +1,7 @@
 import 'package:expense_manager/models/transaction.dart';
 import 'package:expense_manager/widgets/add_transaction.dart';
 import 'package:flutter/material.dart';
+import '../widgets/chart.dart';
 import '../widgets/transaction_list.dart';
 import '../widgets/no_transactions_found.dart';
 
@@ -82,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.of(context).pop();
   }
 
-  void _openBottomSheet(){
+  void _openBottomSheet() {
     showModalBottomSheet(
         context: context,
         builder: (ctx) {
@@ -90,6 +91,14 @@ class _HomeScreenState extends State<HomeScreen> {
             addTransaction: _addTransaction,
           );
         });
+  }
+
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where((element) {
+      return element.date.isAfter(DateTime.now().subtract(
+        Duration(days: 7),
+      ));
+    }).toList();
   }
 
   @override
@@ -100,17 +109,22 @@ class _HomeScreenState extends State<HomeScreen> {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('Expense Manager'),
         actions: [
           IconButton(onPressed: _openBottomSheet, icon: const Icon(Icons.add)),
         ],
       ),
-      body: Column(
-        children: [
-          _userTransactions.isNotEmpty
-              ? TransactionList(userTransactions: _userTransactions)
-              : const NoTransactionsFound(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Chart(
+              recentTransactions: _recentTransactions,
+            ),
+            _userTransactions.isNotEmpty
+                ? TransactionList(userTransactions: _userTransactions)
+                : const NoTransactionsFound(),
+          ],
+        ),
       ),
     );
   }
