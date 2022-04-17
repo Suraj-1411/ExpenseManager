@@ -28,20 +28,16 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: 200,
-        width: double.infinity,
-        child: Card(
-          elevation: 2.0,
-          child: Row(
-            children: _getBarTransactionsData.map((data) {
-              return Flexible(
-                flex: 1,
-                fit: FlexFit.tight,
-                child: ChartBar(amount: data['amount'] as double,day: data['day'].toString().substring(0,1),),
-              );
-            }).toList(),
-          ),
+      child: Card(
+        elevation: 2.0,
+        child: Row(
+          children: _getBarTransactionsData.map((data) {
+            return Flexible(
+              flex: 1,
+              fit: FlexFit.tight,
+              child: ChartBar(amount: data['amount'] as double,day: data['day'].toString().substring(0,1),),
+            );
+          }).toList(),
         ),
       ),
     );

@@ -15,15 +15,12 @@ class TransactionList extends StatefulWidget {
 class _TransactionListState extends State<TransactionList> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      child: ListView.builder(
-          itemCount: widget.userTransactions.length,
-          itemBuilder: (ctx, index) {
-            return TransactionItem(
-              tx: widget.userTransactions[index],
-            );
-          }),
-    );
+    return ListView.builder(
+        itemCount: widget.userTransactions.length,
+        itemBuilder: (ctx, index) {
+          return TransactionItem(
+            tx: widget.userTransactions[index],
+          );
+        });
   }
 }

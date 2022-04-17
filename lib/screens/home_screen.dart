@@ -103,26 +103,40 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var appBar = AppBar(
+      title: const Text('Expense Manager'),
+      actions: [
+        IconButton(onPressed: _openBottomSheet, icon: const Icon(Icons.add)),
+      ],
+    );
+
+    var actualHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: _openBottomSheet,
         child: const Icon(Icons.add),
       ),
-      appBar: AppBar(
-        title: const Text('Expense Manager'),
-        actions: [
-          IconButton(onPressed: _openBottomSheet, icon: const Icon(Icons.add)),
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Chart(
-              recentTransactions: _recentTransactions,
+            Container(
+              height: actualHeight * 0.4,
+              child: Chart(
+                recentTransactions: _recentTransactions,
+              ),
             ),
             _userTransactions.isNotEmpty
-                ? TransactionList(userTransactions: _userTransactions)
-                : const NoTransactionsFound(),
+                ? Container(
+                    height: actualHeight * 0.6,
+                    child: TransactionList(userTransactions: _userTransactions))
+                : Container(
+                    height: actualHeight * 1,
+                    child: const NoTransactionsFound(),
+                  ),
           ],
         ),
       ),
